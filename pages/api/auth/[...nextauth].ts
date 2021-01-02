@@ -1,21 +1,56 @@
 import NextAuth from 'next-auth'
 import Providers from 'next-auth/providers'
 
-import { TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET } from '~/lib/constants'
+import { TWITTER_API_KEY, TWITTER_API_KEY_SECRET } from '~/lib/constants'
 
 const options = {
-  // callbacks: {
-  //   jwt: async (token, user, account, profile, isNewUser) => {
-  //     return Promise.resolve(token)
+  callbacks: {
+    jwt: async (token, user, account, profile, isNewUser) => {
+      // console.log('jwt')
+      // console.log({ account, isNewUser, profile, token, user })
+      const isSignIn = user ? true : false
+      if (isSignIn) {
+        const { accessToken, refreshToken } = account
+        Object.assign(token, { accessToken, refreshToken })
+      }
+      return Promise.resolve(token)
+    },
+    redirect: async (url, baseUrl) => {
+      // console.log('redirect')
+      // console.log({ baseUrl, url })
+      return Promise.resolve(baseUrl)
+    },
+    session: async (session, user) => {
+      // console.log('session')
+      // console.log({ session, user })
+      const { accessToken, refreshToken } = user
+      Object.assign(session, { accessToken, refreshToken })
+      return Promise.resolve(session)
+    },
+    signIn: async (user, account, profile) => {
+      // console.log('signIn')
+      // console.log({ account, profile, user })
+      return Promise.resolve(true)
+    },
+  },
+  // events: {
+  //   createUser: async (message) => {
+  //     /* user created */
   //   },
-  //   redirect: async (url, baseUrl) => {
-  //     return Promise.resolve(baseUrl)
+  //   error: async (message) => {
+  //     /* error in authentication flow */
   //   },
-  //   session: async (session, user) => {
-  //     return Promise.resolve(session)
+  //   linkAccount: async (message) => {
+  //     /* account linked to a user */
   //   },
-  //   signIn: async (user, account, profile) => {
-  //     return Promise.resolve(true)
+  //   session: async (message) => {
+  //     /* session is active */
+  //   },
+  //   signIn: async (message) => {
+  //     /* on successful sign in */
+  //   },
+  //   signOut: async (message) => {
+  //     /* on signout */
   //   },
   // },
   pages: {
@@ -30,8 +65,8 @@ const options = {
   // Configure one or more authentication providers
   providers: [
     Providers.Twitter({
-      clientId: TWITTER_CONSUMER_KEY,
-      clientSecret: TWITTER_CONSUMER_SECRET,
+      clientId: TWITTER_API_KEY,
+      clientSecret: TWITTER_API_KEY_SECRET,
     }),
     // ...add more providers here
   ],
