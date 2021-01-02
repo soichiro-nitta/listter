@@ -233,7 +233,7 @@
     eslint-plugin-tailwind "^0.2.0"
     eslint-plugin-typescript-sort-keys "^1.5.0"
 
-"@soichiro_nitta/motion@^1.0.4":
+"@soichiro_nitta/motion@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@soichiro_nitta/motion/-/motion-1.0.6.tgz#f4d36b1d822894944a03b58597c82b644f1a574d"
   integrity sha512-orxpSmWloPkzu5rGvmsFU8iHAZdGVXrKZ2LLLvDjzuWlZVJEk8nW514O2ueEbIRMuzx47WVRMYLrqjCtcxmtUw==
@@ -250,10 +250,10 @@
   resolved "https://registry.yarnpkg.com/@soichiro_nitta/prettier-config/-/prettier-config-0.0.9.tgz#ec8027ddf8de515f9272f6b72c8d8b3c4a9f912a"
   integrity sha512-ycBM3Rbw15jim9cuORtGlt3yncM8dwZwjJgwqgQOqYmAV9oKh+eMbz0mX2LQyFYU8lxW7t8C/JVbzfc1HYMPJQ==
 
-"@soichiro_nitta/tailwind-config@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@soichiro_nitta/tailwind-config/-/tailwind-config-0.0.12.tgz#9264895c9141412e655ee853186f1dc6a43a1000"
-  integrity sha512-u2n3UAW3vrqigP/8YOXNFvZyTpLo2Dy71HbPVin0YherfQhTbu1MBwX+p0nGMvhcWwOSbZ9IVIkyjrE1F/jidA==
+"@soichiro_nitta/tailwind-config@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@soichiro_nitta/tailwind-config/-/tailwind-config-0.0.13.tgz#d00a22d975c0cd4dfec280da0694077beaccacba"
+  integrity sha512-KA8afqocWemtF0rXs0tUG2sr7kyU4HGzhy/kXMD6X5jpu2o0s48lr5DCk2ujMBUZ+25syZ/5oanfndyw/2Wh8A==
 
 "@sqltools/formatter@1.2.2":
   version "1.2.2"
@@ -1872,6 +1872,11 @@ depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
+
+dequal@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.2.tgz#85ca22025e3a87e65ef75a7a437b35284a7e319d"
+  integrity sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -6418,6 +6423,13 @@ supports-color@^7.1.0:
   integrity sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==
   dependencies:
     has-flag "^4.0.0"
+
+swr@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.3.11.tgz#f7f50ed26c06afea4249482cec504768a2272664"
+  integrity sha512-ya30LuRGK2R7eDlttnb7tU5EmJYJ+N6ytIOM2j0Hqs0qauJcDjVLDOGy7KmFeH5ivOwLHalFaIyYl2K+SGa7HQ==
+  dependencies:
+    dequal "2.0.2"
 
 table@^5.2.3:
   version "5.4.6"

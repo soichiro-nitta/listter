@@ -9,12 +9,13 @@
     "export": "next export"
   },
   "dependencies": {
-    "@soichiro_nitta/motion": "^1.0.4",
+    "@soichiro_nitta/motion": "^1.0.6",
     "clsx": "^1.1.1",
     "next": "^10.0.0",
     "next-auth": "^3.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "swr": "^0.3.11",
     "twemoji": "^13.0.1",
     "twitter": "^1.7.1"
   },
@@ -22,7 +23,7 @@
     "@soichiro_nitta/eslint-config": "^1.0.0",
     "@soichiro_nitta/postcss-config": "^0.0.2",
     "@soichiro_nitta/prettier-config": "^0.0.9",
-    "@soichiro_nitta/tailwind-config": "^0.0.12",
+    "@soichiro_nitta/tailwind-config": "^0.0.13",
     "@types/next-auth": "^3.1.18",
     "@types/node": "^14.6.3",
     "@types/react": "^16.9.49",
