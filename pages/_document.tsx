@@ -11,7 +11,7 @@ class _Document extends Document<Props> {
         <Head>
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&family=Syne:wght@500;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500;700&family=Syne:wght@500;700&family=Inter:wght@500;700&display=swap"
           />
         </Head>
         <body>
