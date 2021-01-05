@@ -5,6 +5,11 @@ export const pagesPath = {
       _nextauth: (nextauth: string[]) => ({
         $url: (url?: { hash?: string }) => ({ pathname: '/api/auth/[...nextauth]' as const, query: { nextauth }, hash: url?.hash })
       })
+    },
+    timeline: {
+      _id: (id: string | number) => ({
+        $url: (url?: { hash?: string }) => ({ pathname: '/api/timeline/[id]' as const, query: { id }, hash: url?.hash })
+      })
     }
   },
   auth: {
