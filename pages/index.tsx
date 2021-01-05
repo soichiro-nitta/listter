@@ -83,9 +83,9 @@ const Page: React.FC<{
               </li>
             ))}
           </ul>
-          <ul className="mt-8">
+          <ul className="">
             {timeline?.map((tweet) => (
-              <li key={tweet.id_str} className="flex justify-between mt-4">
+              <li key={tweet.id_str} className="flex justify-between mt-8">
                 <div className="w-16 h-16">
                   <img
                     src={tweet.user.profile_image_url}
@@ -98,9 +98,8 @@ const Page: React.FC<{
                     <div className="font-bold">{tweet.user.name}</div>
                     <div className="ml-2">@{tweet.user.screen_name}</div>
                   </div>
-
-                  <div className="">{tweet.created_at}</div>
-                  <div className="mt-1 leading-snug">{tweet.text}</div>
+                  <div className="mt-2">{tweet.created_at}</div>
+                  <div className="mt-2 leading-snug">{tweet.text}</div>
                 </div>
               </li>
             ))}
