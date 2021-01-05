@@ -43,7 +43,7 @@ const Page: React.FC<AppProps> = (props) => {
         ref={refs.logo}
         className="fixed flex items-center text-3xl font-bold font-Syne top-8 left-8 h-14"
       >
-        Listter.app
+        Redirect-test
       </div>
       <div
         id="page"
