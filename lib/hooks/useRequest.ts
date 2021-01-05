@@ -1,14 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import useSwr from 'swr'
 
-import { Timeline } from '~/lib/types'
+export const fetcher = (url: string): any =>
+  fetch(url).then((res) => res.json())
 
-const fetcher = (url: string): any => fetch(url).then((res) => res.json())
-
-export const useGetTimeline = (
-  path: string
-): { error: any; timeline: Timeline } => {
-  const { data: _timeline, error } = useSwr(path, fetcher)
-
-  return { error, timeline: _timeline || [] }
+export const useRequest = (path: string): any => {
+  const { data, error } = useSwr(path, fetcher)
+  if (error) console.log('SWR: failed to load')
+  return data
 }

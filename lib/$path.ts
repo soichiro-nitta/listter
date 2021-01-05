@@ -6,10 +6,11 @@ export const pagesPath = {
         $url: (url?: { hash?: string }) => ({ pathname: '/api/auth/[...nextauth]' as const, query: { nextauth }, hash: url?.hash })
       })
     },
-    timeline: {
+    list: {
       _id: (id: string | number) => ({
-        $url: (url?: { hash?: string }) => ({ pathname: '/api/timeline/[id]' as const, query: { id }, hash: url?.hash })
-      })
+        $url: (url?: { hash?: string }) => ({ pathname: '/api/list/[id]' as const, query: { id }, hash: url?.hash })
+      }),
+      $url: (url?: { hash?: string }) => ({ pathname: '/api/list' as const, hash: url?.hash })
     }
   },
   auth: {

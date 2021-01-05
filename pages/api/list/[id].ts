@@ -1,23 +1,14 @@
 import { NextApiHandler } from 'next'
-import { getSession } from 'next-auth/client'
-import Twitter from 'twitter'
 
-import { TWITTER_API_KEY, TWITTER_API_KEY_SECRET } from '~/lib/constants'
+import { twitter } from '~/lib/twitter'
 
 const Api: NextApiHandler = async (req, res) => {
   const { id } = req.query
-
-  const session = await getSession({ req })
-  const client = new Twitter({
-    access_token_key: session.accessToken,
-    access_token_secret: session.refreshToken,
-    consumer_key: TWITTER_API_KEY,
-    consumer_secret: TWITTER_API_KEY_SECRET,
-  })
-
+  const client = await twitter(req)
   const timeline = await client.get('lists/statuses', {
     list_id: id,
   })
+
   res.status(200).json(timeline)
 
   // const {

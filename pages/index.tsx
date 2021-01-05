@@ -1,58 +1,15 @@
-import { GetServerSideProps } from 'next'
-import { getSession, signIn, signOut, useSession } from 'next-auth/client'
+import { signIn, signOut, useSession } from 'next-auth/client'
 import { useEffect, useState } from 'react'
-// import useSwr, { mutate } from 'swr'
-import Twitter from 'twitter'
 
-import {
-  LIST_LIST,
-  TWITTER_API_KEY,
-  TWITTER_API_KEY_SECRET,
-} from '~/lib/constants'
-import { useGetTimeline } from '~/lib/hooks/useRequest'
-import { List, Timeline } from '~/lib/types'
+import { useRequest } from '~/lib/hooks/useRequest'
+import { ListList, Timeline } from '~/lib/types'
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
-  let listList = [{}] as List[]
-  const timelineList = [[]] as Timeline[]
-
-  if (session) {
-    const client = new Twitter({
-      access_token_key: session.accessToken,
-      access_token_secret: session.refreshToken,
-      consumer_key: TWITTER_API_KEY,
-      consumer_secret: TWITTER_API_KEY_SECRET,
-    })
-
-    listList = LIST_LIST
-    // listList = (await client.get('lists/list', {
-    //   reverse: true,
-    // })) as List[]
-
-    // for (const list of listList) {
-    //   const _timeline = (await client.get('lists/statuses', {
-    //     list_id: list.id_str,
-    //   })) as Timeline
-    //   timelineList.push(_timeline)
-    // }
-  }
-
-  return {
-    props: { listList, timelineList },
-  }
-}
-
-const Page: React.FC<{
-  listList: List[]
-  // timelineList: Timeline[]
-}> = (props) => {
-  const [currentId, setCurrentId] = useState(props.listList[0].id_str)
+const Page: React.FC = () => {
   const [session, loading] = useSession()
-  const { timeline } = useGetTimeline(`/api/timeline/${currentId}`)
+  const [currentId, setCurrentId] = useState('')
 
-  // mutate('session', session)
-  // const { data } = useSwr('session')
+  const listList: ListList = useRequest('/api/list')
+  const timeline: Timeline = useRequest(`/api/list/${currentId}`)
 
   const clickList = ({ target }) => {
     const id = target.getAttribute('data-id')
@@ -63,6 +20,10 @@ const Page: React.FC<{
     console.log({ timeline })
   }, [timeline])
 
+  // import useSwr, { mutate } from 'swr'
+  // mutate('session', session)
+  // const { data } = useSwr('session')
+
   return (
     <div className="px-8">
       {session ? (
@@ -72,7 +33,7 @@ const Page: React.FC<{
             Sign out
           </button>
           <ul className="mt-8">
-            {props.listList.map((list) => (
+            {listList?.map((list) => (
               <li
                 key={list.id_str}
                 className="mt-4"
