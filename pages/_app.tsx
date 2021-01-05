@@ -41,7 +41,7 @@ const Page: React.FC<AppProps> = (props) => {
     <Provider session={props.pageProps.session}>
       <div
         ref={refs.logo}
-        className="fixed flex items-center text-3xl font-bold top-8 left-8 h-14"
+        className="fixed flex items-center text-3xl font-bold font-Syne top-8 left-8 h-14"
       >
         Listter.app
       </div>
@@ -51,7 +51,7 @@ const Page: React.FC<AppProps> = (props) => {
       >
         <props.Component {...{ ...props.pageProps }} />
         <div className="h-px mx-auto mt-24 bg-white opacity-25 w-inner" />
-        <div className="my-24 ml-8 font-bold">
+        <div className="my-24 ml-8 font-bold font-Syne">
           <span className="opacity-50">© 2020 </span>Nitta.Studio
           <span className="opacity-50"> Inc.</span>
         </div>

@@ -22,6 +22,10 @@ module.exports = {
       spacing: tailwindConfig.spacing,
       stroke: tailwindConfig.stroke,
     },
+    fontFamily: {
+      Syne: ['Syne'],
+      inter: ['Inter'],
+    },
   },
   variants: {},
 }

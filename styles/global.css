@@ -48,7 +48,7 @@ body {
   height: 100%;
   line-height: 1;
   letter-spacing: 0;
-  font-family: Syne, Noto Sans JP, "ヒラギノ角ゴPro W3", "Hiragino Kaku Gothic Pro", 游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, メイリオ, Meiryo, sans-serif;
+  font-family: Inter, Noto Sans JP, "ヒラギノ角ゴPro W3", "Hiragino Kaku Gothic Pro", 游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, メイリオ, Meiryo, sans-serif;
   font-feature-settings: 'palt';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
