@@ -12,8 +12,9 @@ const Api: NextApiHandler = async (req, res) =>
         // console.log({ account, isNewUser, profile, token, user })
         const isSignIn = user ? true : false
         if (isSignIn) {
-          const { accessToken, refreshToken } = account
-          Object.assign(token, { accessToken, refreshToken })
+          const { accessToken, id, refreshToken } = account
+          const { screen_name } = profile
+          Object.assign(token, { accessToken, id, refreshToken, screen_name })
         }
         return Promise.resolve(token)
       },
@@ -25,14 +26,16 @@ const Api: NextApiHandler = async (req, res) =>
       session: async (
         session,
         user: User & {
-          accessToken: any
-          refreshToken: any
+          accessToken: string
+          id: string
+          refreshToken: string
+          screen_name: string
         }
       ) => {
         // console.log('session')
         // console.log({ session, user })
-        const { accessToken, refreshToken } = user
-        Object.assign(session, { accessToken, refreshToken })
+        const { accessToken, id, refreshToken, screen_name } = user
+        Object.assign(session, { accessToken, id, refreshToken, screen_name })
         return Promise.resolve(session)
       },
       signIn: async (user, account, profile) => {

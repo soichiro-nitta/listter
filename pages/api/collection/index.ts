@@ -1,20 +1,28 @@
+// got, created, updated, deleted
+
 import { NextApiHandler } from 'next'
+import { getSession } from 'next-auth/client'
 
 import { twitter } from '~/lib/twitter'
 
 const Api: NextApiHandler = async (req, res) => {
   const client = await twitter(req)
+  const session = await getSession({ req })
 
   switch (req.method) {
     case 'GET': {
-      const got = await client.get('lists/statuses', {
-        list_id: req.query.id,
+      console.log('get')
+      const got = await client.get('collections/list', {
+        user_id: session.id,
       })
-      res.status(200).json(got)
+      res.status(200).json(Object.values(got.objects.timelines || {}))
       break
     }
     case 'POST': {
-      res.status(200).json({})
+      const created = await client.post('collections/create', {
+        name: req.body.name,
+      })
+      res.status(200).json(created)
       break
     }
     case 'PUT': {
