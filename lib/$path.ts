@@ -7,9 +7,6 @@ export const pagesPath = {
       })
     },
     collection: {
-      _id: (id: string | number) => ({
-        $url: (url?: { hash?: string }) => ({ pathname: '/api/collection/[id]' as const, query: { id }, hash: url?.hash })
-      }),
       $url: (url?: { hash?: string }) => ({ pathname: '/api/collection' as const, hash: url?.hash })
     },
     list: {
