@@ -1,4 +1,16 @@
-export type ListList = {
+export type Collection = {
+  collection_type: string
+  collection_url: string
+  custom_timeline_type: string
+  custom_timeline_url: string
+  name: string
+  name_entities: {}
+  timeline_order: string
+  user_id: string
+  visibility: string
+}[]
+
+export type List = {
   created_at: string
   description: string
   following: boolean
