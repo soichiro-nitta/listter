@@ -14,6 +14,9 @@ module.exports = {
         medium: '#D3D3D3',
         primary: '#999EA4',
         'primary-translucence': 'rgba(69,112,221,.3)',
+        quaternary: '', // secondaryの次の次
+        secondary: '#a3a7ad',
+        tertiary: '', // secondaryの次
       },
       fill: tailwindConfig.fill,
       fontSize: tailwindConfig.fontSize,
