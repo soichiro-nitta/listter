@@ -25,7 +25,7 @@ const Page: React.FC<{}> = (props) => {
         <div className="flex items-center justify-between w-full h-full">
           <div className="font-bold">Collections</div>
           <div
-            className="flex items-center justify-center w-8 h-8 border rounded-md"
+            className="flex items-center justify-center w-8 h-8 border rounded"
             onClick={clickNew}
           >
             ＋
