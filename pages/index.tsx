@@ -1,24 +1,51 @@
 import { signIn, signOut, useSession } from 'next-auth/client'
 import { useEffect, useState } from 'react'
 
-import { useRequest } from '~/lib/hooks/useRequest'
-import { ListList, Timeline } from '~/lib/types'
+import { LIST } from '~/lib/constants'
+import { useCollection, useList, useTimeline } from '~/lib/hooks/swr'
+import { createCollection } from '~/lib/requests'
+import { List } from '~/lib/types'
 
-const Page: React.FC = () => {
+const Page: React.FC<{}> = () => {
   const [session, loading] = useSession()
-  const [currentId, setCurrentId] = useState('')
+  const [listId, setListId] = useState('')
 
-  const listList: ListList = useRequest('/api/list')
-  const timeline: Timeline = useRequest(`/api/list/${currentId}`)
+  const list: List = LIST
+  // const { data: list } = useList()
+  // const { data: timeline } = useTimeline({ id: listId })
+  const timeline = []
+  const { data: collection } = useCollection()
 
-  const clickList = ({ target }) => {
-    const id = target.getAttribute('data-id')
-    setCurrentId(id)
+  const clickList = ({ currentTarget }) => {
+    const id = currentTarget.getAttribute('data-id')
+    setListId(id)
+  }
+
+  const clickTweet = ({ currentTarget }) => {
+    const id = currentTarget.getAttribute('data-id')
+    console.log({ id })
+    fetch('/api/collection', {
+      body: JSON.stringify({ id }),
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+      },
+      method: 'POST',
+    })
   }
 
   useEffect(() => {
     console.log({ timeline })
   }, [timeline])
+
+  useEffect(() => {
+    if (collection) {
+      const exist = collection.some((c) => c.name === 'listter.app')
+      if (!exist) {
+        const created = createCollection({ name: 'listter.app' })
+        console.log({ created })
+      }
+    }
+  }, [collection])
 
   // import useSwr, { mutate } from 'swr'
   // mutate('session', session)
@@ -33,7 +60,7 @@ const Page: React.FC = () => {
             Sign out
           </button>
           <ul className="mt-8">
-            {listList?.map((list) => (
+            {list?.map((list) => (
               <li
                 key={list.id_str}
                 className="mt-4"
@@ -46,7 +73,12 @@ const Page: React.FC = () => {
           </ul>
           <ul className="">
             {timeline?.map((tweet) => (
-              <li key={tweet.id_str} className="flex justify-between mt-8">
+              <li
+                key={tweet.id_str}
+                className="flex justify-between mt-8"
+                data-id={tweet.id_str}
+                onClick={clickTweet}
+              >
                 <div className="w-16 h-16">
                   <img
                     src={tweet.user.profile_image_url}
