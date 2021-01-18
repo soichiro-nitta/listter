@@ -66,7 +66,9 @@ const request = {
 
 // create, update, delete, get
 
-export const createCollection = (params: { name: string }): any => {
+export const createCollection = async (params: {
+  name: string
+}): Promise<any> => {
   const { name } = params
-  return request.post({ data: { name }, url: '/api/collection' })
+  return await request.post({ data: { name }, url: '/api/collection' })
 }

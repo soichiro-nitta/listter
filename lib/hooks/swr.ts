@@ -1,4 +1,4 @@
-import useSwr from 'swr'
+import useSwr, { mutate } from 'swr'
 
 import { Collection, List, Timeline } from '../types'
 
@@ -31,12 +31,19 @@ export const useCollection = (): {
   data: Collection
   error: any
   loading: boolean
+  revalidate: () => void
 } => {
-  const { data, error } = useSwr('/api/collection', fetcher)
+  const key = '/api/collection'
+  const { data, error } = useSwr(key, fetcher)
+  // TODO: 差分のmutateをおこなう
+  const revalidate = () => {
+    mutate(key)
+  }
 
   return {
     data,
     error,
     loading: !error && !data,
+    revalidate,
   }
 }

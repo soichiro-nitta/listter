@@ -8,9 +8,11 @@ const Page: React.FC<AppProps> = (props) => {
     <Provider session={props.pageProps.session}>
       <div
         id="page"
-        className="fixed inset-0 w-full h-full m-auto mt-px overflow-auto pt-18 scroller"
+        className="fixed inset-0 w-full h-full m-auto overflow-auto pt-18 "
       >
-        <props.Component {...{ ...props.pageProps }} />
+        <div className="w-full h-full pt-px scroller">
+          <props.Component {...{ ...props.pageProps }} />
+        </div>
 
         {/* footer */}
         {/* <div className="h-px mx-auto mt-24 bg-white opacity-25 w-inner" />
@@ -21,7 +23,7 @@ const Page: React.FC<AppProps> = (props) => {
       </div>
 
       {/* header's border */}
-      <div className="fixed top-0 w-full h-px bg-white opacity-25 mt-18" />
+      <div className="fixed w-full h-px bg-white opacity-25 top-18" />
 
       {/* round type 1 */}
       {/* <div className="fixed w-8 h-8 border rounded-full top-4 left-8">

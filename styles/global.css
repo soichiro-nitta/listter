@@ -52,6 +52,7 @@ body {
   font-feature-settings: 'palt';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent; /* iOSでタップ時のちらつきを無効 */
   @apply text-white;
   @apply bg-primary;
 }
