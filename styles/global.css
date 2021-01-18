@@ -98,3 +98,10 @@ button {
   padding: 0;
   background: none;
 }
+textarea {
+  resize: none;
+}
+textarea::placeholder {
+  color: white;
+  opacity: 0.5;
+}

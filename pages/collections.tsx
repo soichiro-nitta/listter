@@ -1,12 +1,17 @@
 import { motion } from '@soichiro_nitta/motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+// import { useForm } from 'react-hook-form'
 import { Header } from '~/components/Header'
 import { useCollection } from '~/lib/hooks/swr'
 
 const Page: React.FC<{}> = () => {
   const { data: collection } = useCollection()
   const [show, setShow] = useState<boolean>(false)
+
+  // const { errors, handleSubmit, register, watch } = useForm()
+  // const onSubmit = (data) => console.log(data)
+  // console.log(watch('example'))
 
   const refs = {
     modal: useRef<HTMLDivElement>(null),
@@ -19,10 +24,11 @@ const Page: React.FC<{}> = () => {
 
     if (show) {
       // close
-      motion.addWillChange(modal, 'transform')
+      motion.addWillChange(modal, 'transform, opacity')
       motion.addWillChange(plus, 'transform')
       motion.to(modal, 0.3, 'out', {
-        translateY: '100%',
+        opacity: '0',
+        translateX: '10%',
       })
       motion.to(plus, 0.6, 'out', {
         rotate: '0deg',
@@ -31,20 +37,25 @@ const Page: React.FC<{}> = () => {
       motion.set(modal, { display: 'none' })
       motion.removeWillChange(modal)
       setShow(false)
+      await motion.delay(0.3)
+      motion.removeWillChange(plus)
     } else {
       // open
-      motion.addWillChange(modal, 'transform')
+      motion.addWillChange(modal, 'transform, opacity')
       motion.addWillChange(plus, 'transform')
-      motion.set(modal, { display: 'block', translateY: '100%' })
+      motion.set(modal, { display: 'block', opacity: 0, translateX: '10%' })
       motion.to(modal, 0.45, 'out', {
-        translateY: '0%',
+        opacity: '1',
+        translateX: '0%',
       })
       motion.to(plus, 0.9, 'out', {
-        rotate: '-135deg',
+        rotate: '135deg',
       })
       await motion.delay(0.45)
       motion.removeWillChange(modal)
       setShow(true)
+      await motion.delay(0.45)
+      motion.removeWillChange(plus)
     }
   }, [refs.plus, refs.modal, show])
 
@@ -95,7 +106,13 @@ const Page: React.FC<{}> = () => {
             </div>
           </div>
         </Header>
-        modal
+
+        {/* header's border */}
+        {/* <div className="fixed top-0 w-full h-px bg-white opacity-25 mt-18" /> */}
+
+        <form action="" className="pt-18">
+          <textarea placeholder="Collection title" className="px-8 mt-8" />
+        </form>
       </div>
 
       {/* button for modal */}

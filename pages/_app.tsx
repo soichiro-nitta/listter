@@ -6,12 +6,9 @@ import { Provider } from 'next-auth/client'
 const Page: React.FC<AppProps> = (props) => {
   return (
     <Provider session={props.pageProps.session}>
-      {/* header's border */}
-      <div className="fixed top-0 w-full border-b border-white h-18 border-opacity-25" />
-
       <div
         id="page"
-        className="fixed inset-0 w-full h-full m-auto overflow-auto pt-18 scroller"
+        className="fixed inset-0 w-full h-full m-auto mt-px overflow-auto pt-18 scroller"
       >
         <props.Component {...{ ...props.pageProps }} />
 
@@ -22,6 +19,9 @@ const Page: React.FC<AppProps> = (props) => {
           <span className="opacity-50"> Inc.</span>
         </div> */}
       </div>
+
+      {/* header's border */}
+      <div className="fixed top-0 w-full h-px bg-white opacity-25 mt-18" />
 
       {/* round type 1 */}
       {/* <div className="fixed w-8 h-8 border rounded-full top-4 left-8">
