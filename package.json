@@ -24,7 +24,7 @@
     "@soichiro_nitta/eslint-config": "^1.0.0",
     "@soichiro_nitta/postcss-config": "^0.0.2",
     "@soichiro_nitta/prettier-config": "^0.0.9",
-    "@soichiro_nitta/tailwind-config": "^0.0.15",
+    "@soichiro_nitta/tailwind-config": "^0.0.16",
     "@types/next-auth": "^3.1.18",
     "@types/node": "^14.6.3",
     "@types/react": "^16.9.49",
