@@ -37,12 +37,11 @@ const Page: React.FC<{}> = () => {
     setShow(false)
     await motion.delay(0.3)
     motion.removeWillChange(plus)
-  }, [])
+  }, [refs.modal, refs.plus])
 
   const clickButton = useCallback(async () => {
     const modal = refs.modal.current
     const plus = refs.plus.current
-
     if (show) {
       // close
       closeModal()
@@ -66,16 +65,19 @@ const Page: React.FC<{}> = () => {
     }
   }, [refs.modal, refs.plus, show, closeModal])
 
-  const clickSave = async (data) => {
-    const modal = refs.modal.current
-    const plus = refs.plus.current
-    if (modal && plus) {
-      await createCollection({ name: data.title })
-      revalidate() // TODO: 差分を取得して差分のみアニメーションしたい
-      closeModal()
-      reset()
-    }
-  }
+  const clickSave = useCallback(
+    async (data) => {
+      const modal = refs.modal.current
+      const plus = refs.plus.current
+      if (modal && plus) {
+        await createCollection({ name: data.title })
+        revalidate() // TODO: 差分を取得して差分のみアニメーションしたい
+        closeModal()
+        reset()
+      }
+    },
+    [closeModal, refs.modal, refs.plus, reset, revalidate]
+  )
 
   useEffect(() => {
     console.log({ collection })

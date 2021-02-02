@@ -3,7 +3,7 @@ import '~/styles/global.css'
 import { motion } from '@soichiro_nitta/motion'
 import { AppProps } from 'next/app'
 import { Provider } from 'next-auth/client'
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 const Page: React.FC<AppProps> = (props) => {
   const refs = {
@@ -11,7 +11,7 @@ const Page: React.FC<AppProps> = (props) => {
   }
   const [show, setShow] = useState<boolean>(false)
 
-  const closeMenu = async () => {
+  const closeMenu = useCallback(async () => {
     const menu = refs.menu.current
     motion.addWillChange(menu, 'transform, opacity')
     motion.to(menu, 0.45, 'out', {
@@ -21,9 +21,9 @@ const Page: React.FC<AppProps> = (props) => {
     await motion.delay(0.45)
     motion.removeWillChange(menu)
     setShow(false)
-  }
+  }, [refs.menu])
 
-  const clickLogo = async () => {
+  const clickLogo = useCallback(async () => {
     const menu = refs.menu.current
     if (show) {
       // close
@@ -40,7 +40,7 @@ const Page: React.FC<AppProps> = (props) => {
       motion.removeWillChange(menu)
       setShow(true)
     }
-  }
+  }, [closeMenu, refs.menu, show])
 
   return (
     <Provider session={props.pageProps.session}>
