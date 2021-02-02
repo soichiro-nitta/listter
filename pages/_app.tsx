@@ -1,9 +1,47 @@
 import '~/styles/global.css'
 
+import { motion } from '@soichiro_nitta/motion'
 import { AppProps } from 'next/app'
 import { Provider } from 'next-auth/client'
+import { useRef, useState } from 'react'
 
 const Page: React.FC<AppProps> = (props) => {
+  const refs = {
+    menu: useRef<HTMLDivElement>(null),
+  }
+  const [show, setShow] = useState<boolean>(false)
+
+  const closeMenu = async () => {
+    const menu = refs.menu.current
+    motion.addWillChange(menu, 'transform, opacity')
+    motion.to(menu, 0.45, 'out', {
+      opacity: '0',
+      translateX: '-10%',
+    })
+    await motion.delay(0.45)
+    motion.removeWillChange(menu)
+    setShow(false)
+  }
+
+  const clickLogo = async () => {
+    const menu = refs.menu.current
+    if (show) {
+      // close
+      closeMenu()
+    } else {
+      //open
+      motion.addWillChange(menu, 'transform, opacity')
+      motion.set(menu, { display: 'block', opacity: 0, translateX: '-10%' })
+      motion.to(menu, 0.45, 'out', {
+        opacity: '1',
+        translateX: '0%',
+      })
+      await motion.delay(0.45)
+      motion.removeWillChange(menu)
+      setShow(true)
+    }
+  }
+
   return (
     <Provider session={props.pageProps.session}>
       <div
@@ -36,8 +74,21 @@ const Page: React.FC<AppProps> = (props) => {
         </div>
       </div> */}
 
+      {/* menu */}
+      <div ref={refs.menu} className="fixed left-0 hidden w-full h-full">
+        menu
+        <div className="absolute top-0 left-0 w-1/2 h-full border-r border-white bg-primary border-opacity-25" />
+        <div
+          className="absolute top-0 right-0 w-1/2 h-full"
+          onClick={closeMenu}
+        />
+      </div>
+
       {/* round type 2 */}
-      <div className="fixed w-8 h-8 overflow-hidden border rounded-full top-5 left-8">
+      <div
+        onClick={clickLogo}
+        className="fixed w-8 h-8 overflow-hidden border rounded-full top-5 left-8"
+      >
         <div className="flex items-center justify-center w-full h-full">
           <div className="flex flex-col justify-between w-full h-3">
             <div className="w-full h-px bg-white" />

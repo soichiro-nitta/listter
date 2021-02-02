@@ -19,26 +19,25 @@ const Page: React.FC<{}> = () => {
     plus: useRef<HTMLDivElement>(null),
   }
 
-  const closeModal = useCallback(
-    async (modal: HTMLDivElement, plus: HTMLDivElement) => {
-      motion.addWillChange(modal, 'transform, opacity')
-      motion.addWillChange(plus, 'transform')
-      motion.to(modal, 0.3, 'out', {
-        opacity: '0',
-        translateX: '10%',
-      })
-      motion.to(plus, 0.6, 'out', {
-        rotate: '0deg',
-      })
-      await motion.delay(0.3)
-      motion.set(modal, { display: 'none' })
-      motion.removeWillChange(modal)
-      setShow(false)
-      await motion.delay(0.3)
-      motion.removeWillChange(plus)
-    },
-    []
-  )
+  const closeModal = useCallback(async () => {
+    const modal = refs.modal.current
+    const plus = refs.plus.current
+    motion.addWillChange(modal, 'transform, opacity')
+    motion.addWillChange(plus, 'transform')
+    motion.to(modal, 0.3, 'out', {
+      opacity: '0',
+      translateX: '10%',
+    })
+    motion.to(plus, 0.6, 'out', {
+      rotate: '0deg',
+    })
+    await motion.delay(0.3)
+    motion.set(modal, { display: 'none' })
+    motion.removeWillChange(modal)
+    setShow(false)
+    await motion.delay(0.3)
+    motion.removeWillChange(plus)
+  }, [])
 
   const clickButton = useCallback(async () => {
     const modal = refs.modal.current
@@ -46,7 +45,7 @@ const Page: React.FC<{}> = () => {
 
     if (show) {
       // close
-      closeModal(modal, plus)
+      closeModal()
     } else {
       // open
       motion.addWillChange(modal, 'transform, opacity')
@@ -73,7 +72,7 @@ const Page: React.FC<{}> = () => {
     if (modal && plus) {
       await createCollection({ name: data.title })
       revalidate() // TODO: 差分を取得して差分のみアニメーションしたい
-      closeModal(modal, plus)
+      closeModal()
       reset()
     }
   }
