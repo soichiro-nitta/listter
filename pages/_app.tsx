@@ -5,6 +5,8 @@ import { AppProps } from 'next/app'
 import { Provider } from 'next-auth/client'
 import { useCallback, useRef, useState } from 'react'
 
+import { Twemoji } from '~/components/Twemoji'
+
 const Page: React.FC<AppProps> = (props) => {
   const refs = {
     menu: useRef<HTMLDivElement>(null),
@@ -76,8 +78,16 @@ const Page: React.FC<AppProps> = (props) => {
 
       {/* menu */}
       <div ref={refs.menu} className="fixed left-0 hidden w-full h-full">
-        menu
-        <div className="absolute top-0 left-0 w-1/2 h-full border-r border-white bg-primary border-opacity-25" />
+        <div className="absolute top-0 left-0 w-1/2 h-full border-r border-white bg-primary border-opacity-25">
+          <ul className="mx-8 my-18">
+            <li className="flex items-center pt-5">
+              <Twemoji className="w-auto mr-5 h-7" emoji="🐥" /> Lists
+            </li>
+            <li className="flex items-center pt-5">
+              <Twemoji className="w-auto mr-5 h-7" emoji="🔖" /> Collections
+            </li>
+          </ul>
+        </div>
         <div
           className="absolute top-0 right-0 w-1/2 h-full"
           onClick={closeMenu}
@@ -86,14 +96,16 @@ const Page: React.FC<AppProps> = (props) => {
 
       {/* round type 2 */}
       <div
+        className="fixed top-0 left-0 flex items-center justify-center w-24 h-18"
         onClick={clickLogo}
-        className="fixed w-8 h-8 overflow-hidden border rounded-full top-5 left-8"
       >
-        <div className="flex items-center justify-center w-full h-full">
-          <div className="flex flex-col justify-between w-full h-3">
-            <div className="w-full h-px bg-white" />
-            <div className="w-full h-px bg-white" />
-            <div className="w-full h-px bg-white" />
+        <div className="w-8 h-8 overflow-hidden border rounded-full">
+          <div className="flex items-center justify-center w-full h-full">
+            <div className="flex flex-col justify-between w-full h-3">
+              <div className="w-full h-px bg-white" />
+              <div className="w-full h-px bg-white" />
+              <div className="w-full h-px bg-white" />
+            </div>
           </div>
         </div>
       </div>
