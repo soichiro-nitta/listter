@@ -2,12 +2,15 @@ import { useRouter } from 'next/router'
 
 export const Anchor: React.FC<{
   className?: string
+  onClick?: () => void
   to: string
 }> = (props) => {
   const router = useRouter()
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
+
+    props.onClick()
 
     router.push(props.to)
 

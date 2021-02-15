@@ -2,12 +2,15 @@ import '~/styles/global.css'
 
 import { motion } from '@soichiro_nitta/motion'
 import { AppProps } from 'next/app'
-import { Provider } from 'next-auth/client'
+import { Provider, signIn, signOut, useSession } from 'next-auth/client'
 import { useCallback, useRef, useState } from 'react'
 
+import { Anchor } from '~/components/Anchor'
 import { Twemoji } from '~/components/Twemoji'
 
 const Page: React.FC<AppProps> = (props) => {
+  const [session, loading] = useSession()
+
   const refs = {
     menu: useRef<HTMLDivElement>(null),
   }
@@ -79,14 +82,34 @@ const Page: React.FC<AppProps> = (props) => {
       {/* menu */}
       <div ref={refs.menu} className="fixed left-0 hidden w-full h-full">
         <div className="absolute top-0 left-0 w-1/2 h-full border-r border-white bg-primary border-opacity-25">
-          <ul className="mx-8 my-18">
-            <li className="flex items-center pt-5">
-              <Twemoji className="w-auto mr-5 h-7" emoji="🐥" /> Lists
+          <ul className="w-full h-full px-8 py-18">
+            <li>
+              <Anchor
+                to="/"
+                onClick={closeMenu}
+                className="flex items-center mt-5"
+              >
+                <Twemoji className="w-auto mr-5 h-7" emoji="🐥" /> Lists
+              </Anchor>
             </li>
-            <li className="flex items-center pt-5">
-              <Twemoji className="w-auto mr-5 h-7" emoji="🔖" /> Collections
+            <li>
+              <Anchor
+                to="/collections"
+                onClick={closeMenu}
+                className="flex items-center mt-5"
+              >
+                <Twemoji className="w-auto mr-5 h-7" emoji="🔖" /> Collections
+              </Anchor>
+            </li>
+            <li className="flex items-center mt-5">
+              <Twemoji className="w-auto mr-5 h-7" emoji="🤖" /> My page
             </li>
           </ul>
+          <div className="absolute bottom-5 left-8">
+            <button onClick={() => signOut()} className="p-3 border rounded">
+              Sign out
+            </button>
+          </div>
         </div>
         <div
           className="absolute top-0 right-0 w-1/2 h-full"
