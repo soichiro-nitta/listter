@@ -7,6 +7,7 @@ import { useCallback, useRef, useState } from 'react'
 
 import { Anchor } from '~/components/Anchor'
 import { Twemoji } from '~/components/Twemoji'
+import { pagesPath } from '~/lib/$path'
 
 const Page: React.FC<AppProps> = (props) => {
   const [session, loading] = useSession()
@@ -85,7 +86,7 @@ const Page: React.FC<AppProps> = (props) => {
           <ul className="w-full h-full px-8 py-18">
             <li>
               <Anchor
-                to="/"
+                to={pagesPath.$url().pathname}
                 onClick={closeMenu}
                 className="flex items-center mt-5"
               >
@@ -94,7 +95,7 @@ const Page: React.FC<AppProps> = (props) => {
             </li>
             <li>
               <Anchor
-                to="/collections"
+                to={pagesPath.collections.$url().pathname}
                 onClick={closeMenu}
                 className="flex items-center mt-5"
               >
