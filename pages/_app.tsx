@@ -8,11 +8,8 @@ import { Overview } from '~/components/Overview'
 const _App: React.FC<AppProps> = (props) => {
   return (
     <Provider session={props.pageProps.session}>
-      <div
-        id="page"
-        className="fixed inset-0 w-full h-full m-auto overflow-auto pt-18 "
-      >
-        <div className="w-full h-full pt-px scroller">
+      <div id="page" className="fixed inset-0 w-full h-full pt-18 ">
+        <div className="w-full h-full pt-px overflow-auto scroller">
           <props.Component {...props.pageProps} />
         </div>
 

@@ -1,6 +1,6 @@
 import { motion } from '@soichiro_nitta/motion'
 import { signIn, signOut, useSession } from 'next-auth/client'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { Anchor } from '~/components/Anchor'
 import { Twemoji } from '~/components/Twemoji'
@@ -9,42 +9,41 @@ import { pagesPath } from '~/lib/$path'
 // TODO: 右方向スワイプでナビゲーションを開く
 export const Overview: React.FC<{}> = () => {
   const [session, loading] = useSession()
-
+  const [menu, setMenu] = useState<boolean>(false)
   const refs = {
     menu: useRef<HTMLDivElement>(null),
   }
-  const [show, setShow] = useState<boolean>(false)
 
-  const closeMenu = useCallback(async () => {
-    const menu = refs.menu.current
-    motion.addWillChange(menu, 'transform, opacity')
-    motion.to(menu, 0.45, 'out', {
-      opacity: '0',
-      translateX: '-10%',
-    })
-    await motion.delay(0.45)
-    motion.removeWillChange(menu)
-    setShow(false)
-  }, [refs.menu])
+  const closeMenu = () => setMenu(false)
+  const toggleMenu = useCallback(() => setMenu(!menu), [menu])
 
-  const clickLogo = useCallback(async () => {
-    const menu = refs.menu.current
-    if (show) {
-      // close
-      closeMenu()
-    } else {
-      //open
-      motion.addWillChange(menu, 'transform, opacity')
-      motion.set(menu, { display: 'block', opacity: 0, translateX: '-10%' })
-      motion.to(menu, 0.45, 'out', {
-        opacity: '1',
-        translateX: '0%',
-      })
-      await motion.delay(0.45)
-      motion.removeWillChange(menu)
-      setShow(true)
-    }
-  }, [closeMenu, refs.menu, show])
+  // menu
+  useEffect(() => {
+    ;(async () => {
+      const m = refs.menu.current
+      if (menu) {
+        //open
+        motion.addWillChange(m, 'transform, opacity')
+        motion.set(m, { display: 'block', opacity: 0, translateX: '-10%' })
+        motion.to(m, 0.45, 'out', {
+          opacity: '1',
+          translateX: '0%',
+        })
+        await motion.delay(0.45)
+        motion.removeWillChange(m)
+      } else {
+        // close
+        motion.addWillChange(m, 'transform, opacity')
+        motion.to(m, 0.45, 'out', {
+          opacity: '0',
+          translateX: '-10%',
+        })
+        await motion.delay(0.45)
+        motion.set(m, { display: 'none' })
+        motion.removeWillChange(m)
+      }
+    })()
+  }, [menu, refs.menu])
 
   return (
     <>
@@ -111,7 +110,7 @@ export const Overview: React.FC<{}> = () => {
       {/* round type 2 */}
       <div
         className="fixed top-0 left-0 flex items-center justify-center w-24 h-18"
-        onClick={clickLogo}
+        onClick={toggleMenu}
       >
         <div className="w-8 h-8 overflow-hidden border rounded-full">
           <div className="flex items-center justify-center w-full h-full">
