@@ -19,6 +19,7 @@ const Page: React.FC<{}> = () => {
     plus: useRef<HTMLDivElement>(null),
   }
 
+  // TODO: モーダルの挙動をリファクタ
   const closeModal = useCallback(async () => {
     const modal = refs.modal.current
     const plus = refs.plus.current
