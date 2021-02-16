@@ -1,5 +1,4 @@
 import { motion } from '@soichiro_nitta/motion'
-import { AppProps } from 'next/app'
 import { signIn, signOut, useSession } from 'next-auth/client'
 import { useCallback, useRef, useState } from 'react'
 
@@ -8,7 +7,7 @@ import { Twemoji } from '~/components/Twemoji'
 import { pagesPath } from '~/lib/$path'
 
 // TODO: 右方向スワイプでナビゲーションを開く
-export const Layout: React.FC<AppProps> = (props) => {
+export const Overview: React.FC<{}> = () => {
   const [session, loading] = useSession()
 
   const refs = {
@@ -49,22 +48,6 @@ export const Layout: React.FC<AppProps> = (props) => {
 
   return (
     <>
-      <div
-        id="page"
-        className="fixed inset-0 w-full h-full m-auto overflow-auto pt-18 "
-      >
-        <div className="w-full h-full pt-px scroller">
-          <props.Component {...props.pageProps} />
-        </div>
-
-        {/* footer */}
-        {/* <div className="h-px mx-auto mt-24 bg-white opacity-25 w-inner" />
-        <div className="my-24 ml-8 font-bold font-Syne">
-          <span className="opacity-50">© 2020 </span>Nitta.Studio
-          <span className="opacity-50"> Inc.</span>
-        </div> */}
-      </div>
-
       {/* header's border */}
       <div className="fixed w-full h-px bg-white opacity-25 top-18" />
 
