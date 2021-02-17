@@ -25,23 +25,21 @@ export const Overview: React.FC<{}> = () => {
         //open
         motion.addWillChange(m, 'transform, opacity')
         motion.set(m, { display: 'block', opacity: 0, translateX: '-10%' })
-        motion.to(m, 0.45, 'out', {
+        motion.to(m, 0.5, 'out', {
           opacity: '1',
           translateX: '0%',
         })
-        await motion.delay(0.45)
-        motion.removeWillChange(m)
       } else {
         // close
         motion.addWillChange(m, 'transform, opacity')
-        motion.to(m, 0.45, 'out', {
+        motion.to(m, 0.5, 'out', {
           opacity: '0',
           translateX: '-10%',
         })
-        await motion.delay(0.45)
-        motion.set(m, { display: 'none' })
-        motion.removeWillChange(m)
       }
+      await motion.delay(0.5)
+      if (!menu) motion.set(m, { display: 'none' })
+      motion.removeWillChange(m)
     })()
   }, [menu, refs.menu])
 

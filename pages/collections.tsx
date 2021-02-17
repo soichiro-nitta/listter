@@ -8,7 +8,7 @@ import { createCollection } from '~/lib/requests'
 
 const Page: React.FC<{}> = () => {
   const { data: collection, revalidate } = useCollection()
-  const [show, setShow] = useState<boolean>(false)
+  const [modal, setModal] = useState<boolean>(false)
 
   const { errors, handleSubmit, register, reset, watch } = useForm()
   // watch('title')
@@ -19,52 +19,7 @@ const Page: React.FC<{}> = () => {
     plus: useRef<HTMLDivElement>(null),
   }
 
-  // TODO: モーダルの挙動をリファクタ
-  const closeModal = useCallback(async () => {
-    const modal = refs.modal.current
-    const plus = refs.plus.current
-    motion.addWillChange(modal, 'transform, opacity')
-    motion.addWillChange(plus, 'transform')
-    motion.to(modal, 0.3, 'out', {
-      opacity: '0',
-      translateX: '10%',
-    })
-    motion.to(plus, 0.6, 'out', {
-      rotate: '0deg',
-    })
-    await motion.delay(0.3)
-    motion.set(modal, { display: 'none' })
-    motion.removeWillChange(modal)
-    setShow(false)
-    await motion.delay(0.3)
-    motion.removeWillChange(plus)
-  }, [refs.modal, refs.plus])
-
-  const clickButton = useCallback(async () => {
-    const modal = refs.modal.current
-    const plus = refs.plus.current
-    if (show) {
-      // close
-      closeModal()
-    } else {
-      // open
-      motion.addWillChange(modal, 'transform, opacity')
-      motion.addWillChange(plus, 'transform')
-      motion.set(modal, { display: 'block', opacity: 0, translateX: '10%' })
-      motion.to(modal, 0.45, 'out', {
-        opacity: '1',
-        translateX: '0%',
-      })
-      motion.to(plus, 0.9, 'out', {
-        rotate: '135deg',
-      })
-      await motion.delay(0.45)
-      motion.removeWillChange(modal)
-      setShow(true)
-      await motion.delay(0.45)
-      motion.removeWillChange(plus)
-    }
-  }, [refs.modal, refs.plus, show, closeModal])
+  const toggleModal = useCallback(() => setModal(!modal), [modal])
 
   const clickSave = useCallback(
     async (data) => {
@@ -73,17 +28,55 @@ const Page: React.FC<{}> = () => {
       if (modal && plus) {
         await createCollection({ name: data.title })
         revalidate() // TODO: 差分を取得して差分のみアニメーションしたい
-        closeModal()
+        setModal(false)
         reset()
       }
     },
-    [closeModal, refs.modal, refs.plus, reset, revalidate]
+    [refs.modal, refs.plus, reset, revalidate]
   )
 
   useEffect(() => {
     console.log({ collection })
   }, [collection])
 
+  // modal
+  useEffect(() => {
+    ;(async () => {
+      const m = refs.modal.current
+      const p = refs.plus.current
+      if (modal) {
+        motion.addWillChange(m, 'transform, opacity')
+        motion.addWillChange(p, 'transform')
+        motion.set(m, { display: 'block', opacity: 0, translateX: '10%' })
+        motion.to(m, 0.5, 'out', {
+          opacity: '1',
+          translateX: '0%',
+        })
+        motion.to(p, 0.5, 'out', {
+          rotate: '135deg',
+        })
+        await motion.delay(0.5)
+        motion.removeWillChange(m)
+        motion.removeWillChange(p)
+      } else {
+        motion.addWillChange(m, 'transform, opacity')
+        motion.addWillChange(p, 'transform')
+        motion.to(m, 0.5, 'out', {
+          opacity: '0',
+          translateX: '10%',
+        })
+        motion.to(p, 0.5, 'out', {
+          rotate: '0deg',
+        })
+        await motion.delay(0.5)
+        motion.set(m, { display: 'none' })
+        motion.removeWillChange(m)
+        motion.removeWillChange(p)
+      }
+    })()
+  }, [modal, refs.modal, refs.plus])
+
+  // error
   useEffect(() => {
     ;(async () => {
       const error = refs.error.current
@@ -178,7 +171,7 @@ const Page: React.FC<{}> = () => {
       <div className="fixed top-5 right-8">
         <div
           className="flex items-center justify-center w-8 h-8 border rounded"
-          onClick={clickButton}
+          onClick={toggleModal}
         >
           <div className="relative w-3 h-3" ref={refs.plus}>
             <div className="absolute inset-0 w-full h-px m-auto bg-white" />
