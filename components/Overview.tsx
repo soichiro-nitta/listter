@@ -5,43 +5,42 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Anchor } from '~/components/Anchor'
 import { Twemoji } from '~/components/Twemoji'
 import { pagesPath } from '~/lib/$path'
+import { useToggle } from '~/lib/hooks/useToggle'
 
 // TODO: 右方向スワイプでナビゲーションを開く
-export const Overview: React.FC<{}> = () => {
+export const Overview = () => {
   const [session, loading] = useSession()
-  const [menu, setMenu] = useState<boolean>(false)
   const refs = {
     menu: useRef<HTMLDivElement>(null),
   }
 
-  const closeMenu = () => setMenu(false)
-  const toggleMenu = useCallback(() => setMenu(!menu), [menu])
-
-  // menu
-  useEffect(() => {
-    ;(async () => {
+  const [menu, setMenu] = useToggle({
+    off: async () => {
       const m = refs.menu.current
-      if (menu) {
-        //open
-        motion.addWillChange(m, 'transform, opacity')
-        motion.set(m, { display: 'block', opacity: 0, translateX: '-10%' })
-        motion.to(m, 0.5, 'out', {
-          opacity: '1',
-          translateX: '0%',
-        })
-      } else {
-        // close
-        motion.addWillChange(m, 'transform, opacity')
-        motion.to(m, 0.5, 'out', {
-          opacity: '0',
-          translateX: '-10%',
-        })
-      }
+      motion.addWillChange(m, 'transform, opacity')
+      motion.to(m, 0.5, 'out', {
+        opacity: '0',
+        translateX: '-10%',
+      })
       await motion.delay(0.5)
-      if (!menu) motion.set(m, { display: 'none' })
+      motion.set(m, { display: 'none' })
       motion.removeWillChange(m)
-    })()
-  }, [menu, refs.menu])
+    },
+    on: async () => {
+      const m = refs.menu.current
+      motion.addWillChange(m, 'transform, opacity')
+      motion.set(m, { display: 'block', opacity: 0, translateX: '-10%' })
+      motion.to(m, 0.5, 'out', {
+        opacity: '1',
+        translateX: '0%',
+      })
+      await motion.delay(0.5)
+      motion.removeWillChange(m)
+    },
+  })
+
+  const closeMenu = () => setMenu(false)
+  const toggleMenu = useCallback(() => setMenu(!menu), [menu, setMenu])
 
   return (
     <>
