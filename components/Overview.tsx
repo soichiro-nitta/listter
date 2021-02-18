@@ -5,7 +5,7 @@ import { useCallback, useRef } from 'react'
 import { Anchor } from '~/components/Anchor'
 import { Twemoji } from '~/components/Twemoji'
 import { pagesPath } from '~/lib/$path'
-import { useToggle } from '~/lib/hooks/useToggle'
+import { useMotion } from '~/lib/hooks/useMotion'
 
 // TODO: 右方向スワイプでナビゲーションを開く
 export const Overview = () => {
@@ -14,19 +14,8 @@ export const Overview = () => {
     menu: useRef<HTMLDivElement>(null),
   }
 
-  const [menu, setMenu] = useToggle({
-    off: async () => {
-      const m = refs.menu.current
-      motion.addWillChange(m, 'transform, opacity')
-      motion.to(m, 0.5, 'out', {
-        opacity: '0',
-        translateX: '-10%',
-      })
-      await motion.delay(0.5)
-      motion.set(m, { display: 'none' })
-      motion.removeWillChange(m)
-    },
-    on: async () => {
+  const [menu, setMenu] = useMotion({
+    enter: async () => {
       const m = refs.menu.current
       motion.addWillChange(m, 'transform, opacity')
       motion.set(m, { display: 'block', opacity: 0, translateX: '-10%' })
@@ -35,6 +24,17 @@ export const Overview = () => {
         translateX: '0%',
       })
       await motion.delay(0.5)
+      motion.removeWillChange(m)
+    },
+    leave: async () => {
+      const m = refs.menu.current
+      motion.addWillChange(m, 'transform, opacity')
+      motion.to(m, 0.5, 'out', {
+        opacity: '0',
+        translateX: '-10%',
+      })
+      await motion.delay(0.5)
+      motion.set(m, { display: 'none' })
       motion.removeWillChange(m)
     },
   })
