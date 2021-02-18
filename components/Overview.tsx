@@ -1,6 +1,6 @@
 import { motion } from '@soichiro_nitta/motion'
 import { signIn, signOut, useSession } from 'next-auth/client'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { Anchor } from '~/components/Anchor'
 import { Twemoji } from '~/components/Twemoji'
