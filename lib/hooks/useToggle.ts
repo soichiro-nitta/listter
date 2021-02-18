@@ -12,11 +12,7 @@ export const useToggle = (params: {
     ;(async () => {
       if (!inProgress) {
         setInProgress(true)
-        if (state) {
-          await on()
-        } else {
-          await off()
-        }
+        state ? await on() : await off()
         setInProgress(false)
       }
     })()
