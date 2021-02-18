@@ -215,10 +215,10 @@
   resolved "https://registry.yarnpkg.com/@panva/asn1.js/-/asn1.js-1.0.0.tgz#dd55ae7b8129e02049f009408b97c61ccf9032f6"
   integrity sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==
 
-"@soichiro_nitta/eslint-config@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@soichiro_nitta/eslint-config/-/eslint-config-1.0.0.tgz#adcde35454f1ccfa382c1bf8016cfd5d5ebdec79"
-  integrity sha512-oKeggtLTDoAR+rOuiFxQm9bdluAImEypNG75O9z2X53sG4p5dSL+2qz5unISWivxhAaJVUBraeOVBStzsZa10Q==
+"@soichiro_nitta/eslint-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@soichiro_nitta/eslint-config/-/eslint-config-1.0.1.tgz#73aee62a92a4e276e2320a81c882cd8c534f12cd"
+  integrity sha512-1ndeeXODvvEuVVWko1EfaIzPdA1R+hMU6DLdnyc+SZ0/369o8v2kFTC2bzHzBqSQT8m6Poohqhp4BDDEcZBHEw==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^4.0.1"
     "@typescript-eslint/parser" "^4.0.1"
