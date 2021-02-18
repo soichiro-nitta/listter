@@ -5,7 +5,7 @@ import { Provider } from 'next-auth/client'
 
 import { Overview } from '~/components/Overview'
 
-const _App: React.FC<AppProps> = (props) => {
+const _App = (props: AppProps) => {
   return (
     <Provider session={props.pageProps.session}>
       <div id="page" className="fixed inset-0 w-full h-full pt-18 ">

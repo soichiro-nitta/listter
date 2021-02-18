@@ -6,7 +6,7 @@ import { useCollection, useList, useTimeline } from '~/lib/hooks/swr'
 import { createCollection } from '~/lib/requests'
 import { List } from '~/lib/types'
 
-const Page: React.FC<{}> = () => {
+const Page = () => {
   const [session, loading] = useSession()
   const [listId, setListId] = useState('')
 

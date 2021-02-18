@@ -6,7 +6,7 @@ import { Header } from '~/components/Header'
 import { useCollection } from '~/lib/hooks/swr'
 import { createCollection } from '~/lib/requests'
 
-const Page: React.FC<{}> = () => {
+const Page = () => {
   const { data: collection, revalidate } = useCollection()
   const [modal, setModal] = useState<boolean>(false)
 
