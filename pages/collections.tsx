@@ -4,14 +4,13 @@ import { useForm } from 'react-hook-form'
 
 import { Header } from '~/components/Header'
 import { useCollection } from '~/lib/hooks/swr'
+import { useMotion } from '~/lib/hooks/useMotion'
 import { createCollection } from '~/lib/requests'
 
 const Page = () => {
   const { data: collection, revalidate } = useCollection()
-  const [modal, setModal] = useState<boolean>(false)
-
-  const { errors, handleSubmit, register, reset, watch } = useForm()
-  // watch('title')
+  const form = useForm()
+  // form.watch('title')
 
   const refs = {
     error: useRef<HTMLDivElement>(null),
@@ -19,7 +18,44 @@ const Page = () => {
     plus: useRef<HTMLDivElement>(null),
   }
 
-  const toggleModal = useCallback(() => setModal(!modal), [modal])
+  const [modal, setModal] = useMotion({
+    enter: async () => {
+      const m = refs.modal.current
+      const p = refs.plus.current
+      motion.addWillChange(m, 'transform, opacity')
+      motion.addWillChange(p, 'transform')
+      motion.set(m, { display: 'block', opacity: 0, translateX: '10%' })
+      motion.to(m, 0.5, 'out', {
+        opacity: '1',
+        translateX: '0%',
+      })
+      motion.to(p, 0.5, 'out', {
+        rotate: '135deg',
+      })
+      await motion.delay(0.5)
+      motion.removeWillChange(m)
+      motion.removeWillChange(p)
+    },
+    leave: async () => {
+      const m = refs.modal.current
+      const p = refs.plus.current
+      motion.addWillChange(m, 'transform, opacity')
+      motion.addWillChange(p, 'transform')
+      motion.to(m, 0.5, 'out', {
+        opacity: '0',
+        translateX: '10%',
+      })
+      motion.to(p, 0.5, 'out', {
+        rotate: '0deg',
+      })
+      await motion.delay(0.5)
+      motion.set(m, { display: 'none' })
+      motion.removeWillChange(m)
+      motion.removeWillChange(p)
+    },
+  })
+
+  const toggleModal = useCallback(() => setModal(!modal), [modal, setModal])
 
   const clickSave = useCallback(
     async (data) => {
@@ -29,59 +65,22 @@ const Page = () => {
         await createCollection({ name: data.title })
         revalidate() // TODO: 差分を取得して差分のみアニメーションしたい
         setModal(false)
-        reset()
+        form.reset()
       }
     },
-    [refs.modal, refs.plus, reset, revalidate]
+    [form, refs.modal, refs.plus, revalidate, setModal]
   )
 
   useEffect(() => {
     console.log({ collection })
   }, [collection])
 
-  // modal
-  useEffect(() => {
-    ;(async () => {
-      const m = refs.modal.current
-      const p = refs.plus.current
-      if (modal) {
-        motion.addWillChange(m, 'transform, opacity')
-        motion.addWillChange(p, 'transform')
-        motion.set(m, { display: 'block', opacity: 0, translateX: '10%' })
-        motion.to(m, 0.5, 'out', {
-          opacity: '1',
-          translateX: '0%',
-        })
-        motion.to(p, 0.5, 'out', {
-          rotate: '135deg',
-        })
-        await motion.delay(0.5)
-        motion.removeWillChange(m)
-        motion.removeWillChange(p)
-      } else {
-        motion.addWillChange(m, 'transform, opacity')
-        motion.addWillChange(p, 'transform')
-        motion.to(m, 0.5, 'out', {
-          opacity: '0',
-          translateX: '10%',
-        })
-        motion.to(p, 0.5, 'out', {
-          rotate: '0deg',
-        })
-        await motion.delay(0.5)
-        motion.set(m, { display: 'none' })
-        motion.removeWillChange(m)
-        motion.removeWillChange(p)
-      }
-    })()
-  }, [modal, refs.modal, refs.plus])
-
   // error
   useEffect(() => {
     ;(async () => {
       const error = refs.error.current
       if (error) {
-        if (errors.title) {
+        if (form.errors.title) {
           // error
           motion.set(error, {
             display: 'block',
@@ -97,7 +96,7 @@ const Page = () => {
         }
       }
     })()
-  }, [errors.title, refs.error])
+  }, [form.errors.title, refs.error])
 
   return (
     <div className="">
@@ -138,7 +137,7 @@ const Page = () => {
             {/* save button */}
             <div
               className="flex items-center justify-center w-16 h-8 mr-12 border rounded"
-              onClick={handleSubmit(clickSave)}
+              onClick={form.handleSubmit(clickSave)}
             >
               Save
             </div>
@@ -153,7 +152,7 @@ const Page = () => {
             placeholder="Collection title"
             maxLength={512}
             className="w-full h-10 px-8 my-10 text-2xl leading-snug"
-            ref={register({ required: true })}
+            ref={form.register({ required: true })}
             name="title"
           />
           {/* <textarea
