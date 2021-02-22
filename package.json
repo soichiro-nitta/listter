@@ -4,7 +4,6 @@
     "dev:next": "next dev",
     "dev:path": "pathpida --enableStatic --watch",
     "build": "next build",
-    "build:path": "pathpida --enableStatic",
     "start": "next start",
     "export": "next export"
   },
