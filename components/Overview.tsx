@@ -7,6 +7,18 @@ import { Twemoji } from '~/components/Twemoji'
 import { pagesPath } from '~/lib/$path'
 import { useMotion } from '~/lib/hooks/useMotion'
 
+const menu = [
+  {
+    count: 10,
+    lists: {},
+    title: 'Collections',
+  },
+  {
+    count: 10,
+    lists: {},
+    title: 'Lists',
+  },
+]
 // TODO: 右方向スワイプでナビゲーションを開く
 export const Overview = () => {
   const [session, loading] = useSession()
@@ -64,7 +76,7 @@ export const Overview = () => {
           <ul className="w-full h-full px-8 py-18">
             <li>
               <Anchor
-                to={pagesPath.$url().pathname}
+                href={pagesPath.lists.$url().pathname}
                 onClick={closeMenu}
                 className="flex items-center mt-5"
               >
@@ -73,7 +85,7 @@ export const Overview = () => {
             </li>
             <li>
               <Anchor
-                to={pagesPath.collections.$url().pathname}
+                href={pagesPath.collections.$url().pathname}
                 onClick={closeMenu}
                 className="flex items-center mt-5"
               >

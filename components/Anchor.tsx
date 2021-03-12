@@ -1,15 +1,11 @@
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { UrlObject } from 'url'
 
 export const Anchor: React.FC<{
   className?: string
+  href: string | UrlObject
   onClick?: () => void
-  to:
-    | string
-    | {
-        hash: string
-        pathname: string
-        query: {}
-      }
 }> = (props) => {
   const router = useRouter()
 
@@ -18,7 +14,7 @@ export const Anchor: React.FC<{
 
     if (props.onClick) props.onClick()
 
-    router.push(props.to)
+    router.push(props.href)
 
     router.events.on('routeChangeComplete', () => {
       const page = document.getElementById('page')
@@ -27,8 +23,8 @@ export const Anchor: React.FC<{
   }
 
   return (
-    <a {...{ className: props.className, onClick, to: props.to }}>
-      {props.children}
-    </a>
+    <Link {...{ href: props.href }}>
+      <a {...{ className: props.className, onClick }}>{props.children}</a>
+    </Link>
   )
 }

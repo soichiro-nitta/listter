@@ -26,8 +26,9 @@ const request = {
       method: 'GET',
       ...config,
     })
+    console.log({ res })
 
-    if (!res.ok) throw new Error()
+    // if (!res.ok) throw new Error()
     return res.json()
   },
   post: async (params: { config?: {}; data: {}; url: string }) => {
@@ -70,5 +71,5 @@ export const createCollection = async (params: {
   name: string
 }): Promise<any> => {
   const { name } = params
-  return await request.post({ data: { name }, url: '/api/collection' })
+  return await request.post({ data: { name }, url: '/api/collections' })
 }

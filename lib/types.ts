@@ -24,7 +24,7 @@ export type List = {
   subscriber_count: number
   uri: string
   user: {}
-}[]
+}
 
 export type Timeline = {
   created_at: string

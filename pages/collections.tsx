@@ -101,10 +101,8 @@ const Page = () => {
   return (
     <div className="">
       <Header>
-        <div className="flex items-center justify-between w-full h-full">
-          <div className="font-bold">All collections</div>
-          {/* <div className="font-bold">すべてのコレクション</div> */}
-        </div>
+        <div className="font-bold">All Collections</div>
+        {/* <div className="font-bold">すべてのコレクション</div> */}
       </Header>
 
       <div className="w-full px-8 py-4 bg-secondary">

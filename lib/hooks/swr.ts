@@ -4,8 +4,8 @@ import { Collection, List, Timeline } from '../types'
 
 const fetcher = (url: string): any => fetch(url).then((res) => res.json())
 
-export const useList = (): { data: List; error: any; loading: boolean } => {
-  const { data, error } = useSwr('/api/list', fetcher)
+export const useLists = (): { data: List[]; error: any; loading: boolean } => {
+  const { data, error } = useSwr('/api/lists', fetcher)
 
   return {
     data,
@@ -18,7 +18,7 @@ export const useTimeline = (params: {
   id: string
 }): { data: Timeline; error: any; loading: boolean } => {
   const { id } = params
-  const { data, error } = useSwr(`/api/list/${id}`, fetcher)
+  const { data, error } = useSwr(`/api/lists/${id}`, fetcher)
 
   return {
     data,
@@ -33,7 +33,7 @@ export const useCollection = (): {
   loading: boolean
   revalidate: () => void
 } => {
-  const key = '/api/collection'
+  const key = '/api/collections'
   const { data, error } = useSwr(key, fetcher)
   // TODO: 差分のmutateをおこなう
   const revalidate = () => {
