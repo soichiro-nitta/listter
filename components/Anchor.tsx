@@ -3,14 +3,20 @@ import { useRouter } from 'next/router'
 export const Anchor: React.FC<{
   className?: string
   onClick?: () => void
-  to: string
+  to:
+    | string
+    | {
+        hash: string
+        pathname: string
+        query: {}
+      }
 }> = (props) => {
   const router = useRouter()
 
   const onClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
 
-    props.onClick()
+    if (props.onClick) props.onClick()
 
     router.push(props.to)
 
@@ -21,7 +27,7 @@ export const Anchor: React.FC<{
   }
 
   return (
-    <a {...{ className: props.className, href: props.to, onClick }}>
+    <a {...{ className: props.className, onClick, to: props.to }}>
       {props.children}
     </a>
   )
